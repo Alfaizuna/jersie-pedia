@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import TabItem from '../TabItem';
 
 const BottomNavigator = ({state, descriptors, navigation}) => {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={styles.container}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const label =
@@ -36,17 +37,14 @@ const BottomNavigator = ({state, descriptors, navigation}) => {
         };
 
         return (
-          <TouchableOpacity
+          <TabItem
             key={index}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? {selected: true} : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
+            label={label}
+            options={options}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{flex: 1}}>
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
-          </TouchableOpacity>
+            isFocused={isFocused}
+          />
         );
       })}
     </View>
@@ -54,3 +52,24 @@ const BottomNavigator = ({state, descriptors, navigation}) => {
 };
 
 export default BottomNavigator;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    backgroundColor: '#22668A',
+    paddingVertical: 8,
+    paddingHorizontal: 30,
+    marginBottom: 30,
+    marginHorizontal: 30,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+});
